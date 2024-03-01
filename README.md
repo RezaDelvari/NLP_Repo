@@ -1,26 +1,45 @@
-## Exploratory Data Analysis
-First, let's load the data and understand what we are working with.
+# Hotel Review Analysis
 
-1.Perform EDA on the data and mention 3-4 observations from which you can draw actionable insights. In your EDA, you may consider creating a data dictionary, basic statistical analysis, data visualizations, data cleaning and preprocessing to prepare the data for modeling.
-## Preprocessing
-Next, the text data needs to be processed for modelling.
+## Overview
+This project aims to analyze hotel reviews dataset to predict reviewer scores based on various factors such as reviewer nationality, review content, and hotel characteristics. The dataset contains information like average score, reviewer nationality, review word counts, nights stayed, etc. Additionally, the project involves Exploratory Data Analysis (EDA) to understand the distribution of data and identify patterns, followed by model development using Logistic Regression and Decision Tree algorithms.
 
-2.Split the data into train and test sets and transform the positive and negative review columns using a CountVectorizer. Consider the following:
-* What tokenizer and text cleaning steps do you include?
-* Using the vectorizer, maximize the number of features at 500 and make sure that tokens used <10 times are dropped from the vocabulary.
+## Dataset Description
+The dataset consists of the following fields:
 
-This process may be done on the positive and negative review columns separately and then the resulting arrays merged with the original numeric features to form the final train and test data frames ready for modelling. In your column names, make sure you mark which words are coming from the positive vs negative reviews (you can use a prefix such as pos_ and neg_).
+- Additional_Number_of_Scoring
+- Average_Score
+- Reviewer_Nationality
+- Negative_Review
+- Review_Total_Negative_Word_Counts
+- Positive_Review
+- Review_Total_Positive_Word_Counts
+- Reviewer_Score
+- Total_Number_of_Reviews_Reviewer_Has_Given
+- Total_Number_of_Reviews
+- Hotel_Address
+- Leisure_Trip
+- Nights_Stayed
 
-## Modelling
-As the data is now ready for modelling, we will be creating two separate models with optimization and evaluation of each.
+## Data Preprocessing
+Initially, duplicate rows in the dataset were identified and removed. The binary columns and non-numerical review columns were dropped for further analysis. A total of 13 numerical features were retained for the analysis.
 
-3.Fit a logistic regression model on the data and analyze the test and train accuracy. Find the top 20 words from the positive reviews that are most predictive of a positive sentiment (Reviewer_Score = 1). Similarly, find the top 20 words from the negative reviews that are most predictive of a negative sentiment (Reviewer_Score = 0). What actionable insights can you draw from these?
+## Exploratory Data Analysis (EDA)
+EDA revealed several insights about the dataset:
 
-4.Using a pipeline, combine PCA with a decision tree classifier.
+- Majority of columns are heavily skewed to the right.
+- Most reviewers have less than 8 total reviews given.
+- Review word counts are mostly under 23.
+- Most reviewers stay at the hotel for less than 3 days.
+- The dataset spans over 3 years, from 2015 to 2017.
 
-* Optimize at least 3 hyperparameters including the maximum tree depth and the minimum number of data points required on each leaf node.
-* You can use 20 principle components.
-* The best parameters should be found using 5-fold cross validation.
-Contrast the best results here with the logistic regression model and provide any insights that you may draw from the results.
+## Distribution of Target Column
+The target column, which is Reviewer_Score, was found to be slightly imbalanced, with 57% good reviews and 43% bad reviews. This split also implies a base accuracy of 57% for blind guessing all reviews to be good.
 
-For your best performing model, conduct a more in-depth evaluation by analyzing the confusion matrix and commenting on the model errors and metrics such as precision and recall.
+## Model Development
+Two models were developed:
+
+1. **Logistic Regression**: Achieved a train accuracy of 71.1% and a test accuracy of 70.9%.
+2. **Decision Tree**: Initially overfitted with a train accuracy of 100% and a test accuracy of 69.9%. The model was optimized using Grid Search, resulting in improved performance with a test accuracy of 75.8%.
+
+## Conclusion
+The project involved preprocessing the data, conducting EDA, and creating models to predict reviewer scores. The Decision Tree model with optimized parameters performed the best, achieving a test accuracy of 75.8%. Further optimization and model evaluation can be explored using techniques like PCA and Grid Search CV or Randomized Search CV. These approaches can improve model performance and interpretability.
